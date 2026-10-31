@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#08090d">
+<title>ZYH 自用</title>
+<meta name="description" content="ZYH 自用 · 个人 iOS 越狱源，收录自用插件与工具，Sileo / Zebra / Cydia 均可添加。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ZYH 自用">
+<meta property="og:description" content="个人 iOS 越狱源 · 自用插件与工具，Sileo / Zebra / Cydia 均可添加。">
+<meta property="og:image" content="assets/banner.png">
+<link rel="icon" href="CydiaIcon.png">
+<link rel="apple-touch-icon" href="CydiaIcon.png">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #08090d;
+    --bg-soft: #0e1117;
+    --card: #151a23;
+    --card-hover: #1a2130;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.14);
+    --text: #f2f5fa;
+    --text-dim: #9aa4b5;
+    --text-mute: #5f6a7d;
+    --blue: #0a84ff;
+    --blue-bright: #3d9bff;
+    --green: #30d158;
+    --purple: #bf8cff;
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --radius-sm: 10px;
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC",
+      "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1200px 600px at 85% -10%, rgba(10, 132, 255, 0.10), transparent 60%),
+      radial-gradient(900px 500px at -10% 10%, rgba(191, 140, 255, 0.06), transparent 55%),
+      var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  a { color: var(--blue-bright); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1px 6px;
+    word-break: break-all;
+  }
+  .page {
+    width: 100%;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: clamp(16px, 4vw, 40px) clamp(14px, 4vw, 28px) 64px;
+  }
+  .skip {
+    position: absolute; left: -9999px; top: 0;
+    background: var(--blue); color: #fff; padding: 8px 14px; border-radius: 0 0 10px 0;
+  }
+  .skip:focus { left: 0; z-index: 50; }
+
+  /* ---------------- 头部 ---------------- */
+  .hero {
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012));
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.9);
+  }
+  .hero-banner-wrap { position: relative; }
+  .hero-banner {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: #0b1220;
+  }
+  .hero-banner-fade {
+    position: absolute; inset: auto 0 0 0; height: 46%;
+    background: linear-gradient(180deg, transparent, rgba(13, 16, 23, 0.92));
+    pointer-events: none;
+  }
+  .hero-body { padding: clamp(16px, 3.4vw, 26px); margin-top: -34px; position: relative; }
+  .repo-head { display: flex; align-items: center; gap: 14px; }
+  .repo-icon {
+    width: 64px; height: 64px;
+    border-radius: 16px;
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 10px 26px -10px rgba(0, 0, 0, 0.9);
+    background: var(--card);
+    flex: none;
+  }
+  .repo-head h1 {
+    margin: 0;
+    font-size: clamp(22px, 4.6vw, 30px);
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+  }
+  .repo-sub { margin: 4px 0 0; color: var(--text-dim); font-size: 14px; }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 0 20px;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:active { transform: scale(0.975); }
+  .btn-primary {
+    background: linear-gradient(180deg, var(--blue-bright), var(--blue));
+    color: #fff;
+    box-shadow: 0 12px 30px -12px rgba(10, 132, 255, 0.75);
+  }
+  .btn-primary:hover { background: linear-gradient(180deg, #55a9ff, #1b8dff); text-decoration: none; }
+  .btn-ghost {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+  .btn-ghost:hover { background: rgba(255, 255, 255, 0.1); }
+  .btn-link {
+    display: inline-flex; align-items: center; min-height: 46px; padding: 0 6px;
+    color: var(--text-dim); font-size: 14px;
+  }
+  .btn-link:hover { color: var(--text); }
+
+  .src-line {
+    margin: 16px 0 0;
+    font-size: 13.5px;
+    color: var(--text-dim);
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px;
+  }
+  #src-url {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 5px 10px;
+    color: var(--text);
+    font-size: 13px;
+    outline: none;
+  }
+  #src-url:focus { border-color: var(--blue); }
+  .repo-meta { margin: 10px 0 0; font-size: 13px; color: var(--text-mute); }
+  .repo-meta .dot { margin: 0 7px; opacity: 0.5; }
+
+  /* ---------------- 搜索栏 ---------------- */
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 26px 0 14px;
+    padding: 12px 2px;
+    background: linear-gradient(180deg, rgba(8, 9, 13, 0.94), rgba(8, 9, 13, 0.72));
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+  .search {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 0 14px;
+    border-radius: 14px;
+    border: 1px solid var(--border-strong);
+    background: rgba(255, 255, 255, 0.05);
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .search:focus-within { border-color: var(--blue); background: rgba(10, 132, 255, 0.08); }
+  .search-icon { color: var(--text-mute); font-size: 18px; line-height: 1; flex: none; }
+  .search input {
+    flex: 1 1 auto;
+    min-width: 0;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+    padding: 0;
+  }
+  .search input::placeholder { color: var(--text-mute); }
+  .count {
+    flex: none;
+    color: var(--text-dim);
+    font-size: 13px;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------------- 状态 / 提示 ---------------- */
+  .status { margin: 8px 0 18px; }
+  .status:empty { display: none; }
+  .panel {
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.035);
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
+    font-size: 14.5px;
+    color: var(--text-dim);
+  }
+  .panel h2 { margin: 0 0 8px; font-size: 16px; color: var(--text); }
+  .panel p { margin: 8px 0; }
+  .panel ol { margin: 8px 0; padding-left: 22px; }
+  .panel li { margin: 5px 0; }
+  .panel code { color: #cfe4ff; }
+  .panel.error { border-color: rgba(255, 99, 99, 0.4); background: rgba(255, 69, 58, 0.07); }
+  .panel.error h2 { color: #ff8d85; }
+  .status.loading .panel { display: flex; align-items: center; gap: 12px; }
+  .spinner {
+    width: 18px; height: 18px; flex: none;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.16);
+    border-top-color: var(--blue-bright);
+    animation: spin 0.9s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------------- 插件卡片 ---------------- */
+  .pkg-list { display: flex; flex-direction: column; gap: 16px; }
+  .pkg {
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)), var(--card);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    scroll-margin-top: 96px;
+    transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+  }
+  .pkg:hover { border-color: var(--border-strong); background: var(--card-hover); }
+  .pkg.flash { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.22); }
+  .pkg-top { display: flex; align-items: flex-start; gap: 14px; }
+  .pkg-icon {
+    width: 56px; height: 56px; flex: none;
+    border-radius: 14px;
+    border: 1px solid var(--border-strong);
+    background: var(--card);
+    object-fit: cover;
+  }
+  .pkg-head { flex: 1 1 auto; min-width: 0; }
+  .pkg-name { margin: 0; font-size: 18.5px; line-height: 1.3; word-break: break-word; }
+  .pkg-id {
+    margin-top: 3px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text-mute);
+    word-break: break-all;
+  }
+  .pkg-ver {
+    flex: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dim);
+    font-variant-numeric: tabular-nums;
+    padding-top: 3px;
+  }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .badge-rootful { color: #6db4ff; background: rgba(10, 132, 255, 0.14); border-color: rgba(10, 132, 255, 0.35); }
+  .badge-rootless { color: #5ee288; background: rgba(48, 209, 88, 0.12); border-color: rgba(48, 209, 88, 0.32); }
+  .badge-roothide { color: #cda6ff; background: rgba(191, 140, 255, 0.12); border-color: rgba(191, 140, 255, 0.32); }
+  .badge-unknown { color: var(--text-dim); background: rgba(255, 255, 255, 0.06); border-color: var(--border-strong); }
+  .badge-section { color: var(--text-dim); background: rgba(255, 255, 255, 0.05); border-color: var(--border); }
+
+  .pkg-desc {
+    margin: 14px 0 0;
+    color: var(--text-dim);
+    font-size: 14.5px;
+    line-height: 1.75;
+    white-space: pre-line;
+    word-break: break-word;
+  }
+
+  .chips { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 14px; }
+  .chips-label { font-size: 12.5px; color: var(--text-mute); }
+  .chip {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #b9c6d8;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 2px 10px;
+    white-space: nowrap;
+  }
+
+  .pkg-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .dls { display: flex; flex-wrap: wrap; gap: 9px; }
+  .dl {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 15px;
+    border-radius: 12px;
+    background: rgba(10, 132, 255, 0.13);
+    border: 1px solid rgba(10, 132, 255, 0.4);
+    color: #cfe4ff;
+    font-size: 13.5px;
+    font-weight: 600;
+    transition: background 0.15s ease, transform 0.12s ease;
+  }
+  .dl:hover { background: rgba(10, 132, 255, 0.22); text-decoration: none; }
+  .dl:active { transform: scale(0.975); }
+  .dl small { font-weight: 400; color: #8fb6df; font-size: 12px; }
+  .pkg-section { font-size: 12.5px; color: var(--text-mute); }
+
+  .empty {
+    text-align: center;
+    color: var(--text-mute);
+    padding: 42px 10px;
+    font-size: 14.5px;
+  }
+
+  /* ---------------- 页脚 ---------------- */
+  .footer {
+    margin-top: 42px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+    color: var(--text-mute);
+    font-size: 13px;
+    line-height: 1.9;
+  }
+  .footer nav { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 10px; }
+  .footer a { color: var(--text-dim); }
+  .footer a:hover { color: var(--text); }
+  .footer .warn { color: #d8a657; }
+
+  /* ---------------- 提示条 ---------------- */
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: max(24px, env(safe-area-inset-bottom, 24px));
+    transform: translate(-50%, 20px);
+    max-width: min(560px, calc(100vw - 32px));
+    padding: 12px 18px;
+    border-radius: 14px;
+    border: 1px solid var(--border-strong);
+    background: rgba(28, 33, 44, 0.96);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.55;
+    box-shadow: 0 18px 44px -14px rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 99;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  @media (max-width: 560px) {
+    .hero-body { margin-top: -26px; }
+    .repo-icon { width: 54px; height: 54px; border-radius: 14px; }
+    .pkg { padding: 17px; border-radius: 18px; }
+    .pkg-icon { width: 48px; height: 48px; border-radius: 12px; }
+    .pkg-name { font-size: 17px; }
+    .btn { min-height: 44px; padding: 0 16px; }
+    .count { font-size: 12px; }
+    .pkg-ver { font-size: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#pkgs">跳到插件列表</a>
+
+<div class="page">
+  <header class="hero">
+    <div class="hero-banner-wrap">
+      <img class="hero-banner" src="assets/banner.png" alt="ZYH 自用 越狱源横幅" width="1600" height="900">
+      <div class="hero-banner-fade" aria-hidden="true"></div>
+    </div>
+    <div class="hero-body">
+      <div class="repo-head">
+        <img class="repo-icon" src="CydiaIcon.png" alt="ZYH 自用 源图标" width="64" height="64">
+        <div>
+          <h1>ZYH 自用</h1>
+          <p class="repo-sub">个人 iOS 越狱源 · 自用插件与工具</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a class="btn btn-primary" id="btn-sileo" href="#">添加到 Sileo</a>
+        <button class="btn btn-ghost" id="btn-copy" type="button">复制源地址</button>
+        <a class="btn-link" id="btn-cydia" href="#">用 Cydia 添加</a>
+      </div>
+
+      <p class="src-line">加源地址：<code id="src-url" tabindex="-1">正在计算…</code></p>
+      <p class="repo-meta" id="repo-meta">正在读取源索引…</p>
+    </div>
+  </header>
+
+  <main id="pkgs">
+    <section class="toolbar" aria-label="搜索插件">
+      <label class="search">
+        <span class="search-icon" aria-hidden="true">&#9906;</span>
+        <input id="search" type="search" inputmode="search" autocomplete="off"
+               spellcheck="false" placeholder="搜索插件名称、包名或描述" aria-label="搜索插件">
+      </label>
+      <span class="count" id="count">加载中…</span>
+    </section>
+
+    <div class="status loading" id="status" role="status">
+      <div class="panel"><span class="spinner" aria-hidden="true"></span>正在读取 Packages 索引…</div>
+    </div>
+
+    <section class="pkg-list" id="pkg-list" aria-live="polite"></section>
+
+    <noscript>
+      <div class="panel notice">
+        <h2>JavaScript 未启用</h2>
+        <p>本页用 JavaScript 读取 <code>Packages</code> 索引来展示插件列表。未启用 JS 也能加源：</p>
+        <ol>
+          <li>复制本页地址（以 <code>/</code> 结尾），就是源地址；</li>
+          <li>打开 <strong>Sileo</strong> →「来源」→ 右上角「+」→ 粘贴地址 → 添加；</li>
+          <li>Zebra / Cydia 同理，在「源 / Sources」里添加同一个地址。</li>
+        </ol>
+        <p>索引文件：<a href="Packages">Packages</a> · 源元数据：<a href="Release">Release</a></p>
+      </div>
+    </noscript>
+  </main>
+
+  <footer class="footer">
+    <nav>
+      <a href="Packages">Packages 索引</a>
+      <a href="Release">Release 元数据</a>
+      <a href="CydiaIcon.png">源图标</a>
+      <a href="使用说明.md">使用说明</a>
+      <a href="README.md">仓库说明</a>
+    </nav>
+    <div>
+      本页通过 <code>fetch('Packages')</code> 读取源索引，纯静态、无第三方脚本。
+      源支持 <strong>rootful</strong>（iphoneos-arm）、<strong>rootless</strong>（iphoneos-arm64）、
+      <strong>roothide</strong>（iphoneos-arm64e）三种越狱架构，Sileo 会自动匹配设备。
+    </div>
+    <div class="warn">个人自用项目，与插件所适配的官方 App 无关；越狱与安装第三方插件有风险，请自行判断。</div>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var DEFAULT_ICON = 'assets/package-icon-default.png';
+  var ARCH_LABEL = {
+    'iphoneos-arm': 'rootful',
+    'iphoneos-arm64': 'rootless',
+    'iphoneos-arm64e': 'roothide'
+  };
+  var ARCH_HINT = {
+    'iphoneos-arm': 'rootful · 有根越狱',
+    'iphoneos-arm64': 'rootless · 无根越狱（Dopamine、palera1n --rootless 等）',
+    'iphoneos-arm64e': 'roothide · roothide Bootstrap'
+  };
+  var ARCH_CLASS = {
+    'iphoneos-arm': 'badge-rootful',
+    'iphoneos-arm64': 'badge-rootless',
+    'iphoneos-arm64e': 'badge-roothide'
+  };
+
+  var els = {
+    sileo: document.getElementById('btn-sileo'),
+    copy: document.getElementById('btn-copy'),
+    cydia: document.getElementById('btn-cydia'),
+    srcUrl: document.getElementById('src-url'),
+    repoMeta: document.getElementById('repo-meta'),
+    search: document.getElementById('search'),
+    count: document.getElementById('count'),
+    status: document.getElementById('status'),
+    list: document.getElementById('pkg-list'),
+    toast: document.getElementById('toast')
+  };
+
+  var state = { groups: [], filtered: [] };
+
+  /* ------------------------------ 小工具 ------------------------------ */
+
+  function sourceUrl() {
+    try {
+      return new URL('.', location.href).href;
+    } catch (err) {
+      return location.href.replace(/[^/]*$/, '');
+    }
+  }
+
+  function escapeHtml(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function humanSize(bytes) {
+    var n = Number(bytes);
+    if (!isFinite(n) || n <= 0) return '';
+    if (n < 1024) return n + ' B';
+    if (n < 1024 * 1024) return (n / 1024).toFixed(1) + ' KB';
+    return (n / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+
+  var toastTimer = null;
+  function toast(message, duration) {
+    els.toast.textContent = message;
+    els.toast.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      els.toast.classList.remove('show');
+    }, duration || 3000);
+  }
+
+  function setStatus(html, kind) {
+    if (!html) {
+      els.status.className = 'status';
+      els.status.innerHTML = '';
+      return;
+    }
+    els.status.className = 'status ' + (kind || '');
+    els.status.innerHTML = html;
+  }
+
+  /* --------------------------- RFC822 解析 --------------------------- */
+
+  // 解析 apt Packages（RFC822 风格）：支持字段续行（以空格/制表符开头）、
+  // '#' 注释行、空行分 stanza；Description 里单独的 "." 表示空行（渲染时处理）。
+  function parsePackages(text) {
+    var stanzas = [];
+    var current = null;
+    var lastKey = null;
+    var lines = String(text == null ? '' : text).split(/\r\n|\r|\n/);
+
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+
+      if (line === '') {
+        if (current && Object.keys(current).length > 0) {
+          stanzas.push(current);
+          current = null;
+          lastKey = null;
+        }
+        continue;
+      }
+      if (line.charAt(0) === '#') continue; // 注释行
+
+      if (line.charAt(0) === ' ' || line.charAt(0) === '\t') {
+        if (current && lastKey) {
+          current[lastKey].push(line.replace(/^[ \t]/, ''));
+        }
+        continue;
+      }
+
+      var sep = line.indexOf(':');
+      if (sep <= 0) continue;
+      var key = line.slice(0, sep).trim();
+      var value = line.slice(sep + 1).replace(/^[ \t]/, '');
+      if (!key) continue;
+
+      if (!current) current = {};
+      current[key] = [value];
+      lastKey = key;
+    }
+    if (current && Object.keys(current).length > 0) stanzas.push(current);
+
+    return stanzas.map(function (raw) {
+      var out = {};
+      for (var key in raw) {
+        if (Object.prototype.hasOwnProperty.call(raw, key)) out[key] = raw[key].join('\n');
+      }
+      return out;
+    });
+  }
+
+  function descriptionText(stanza) {
+    var lines = String(stanza.Description || '').split('\n');
+    var out = [];
+    for (var i = 0; i < lines.length; i++) {
+      out.push(lines[i] === '.' ? '' : lines[i]);
+    }
+    return out.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+  }
+
+  function dependsList(stanza) {
+    var raw = String(stanza.Depends || '');
+    if (!raw) return [];
+    return raw.split(',').map(function (item) {
+      return item.trim();
+    }).filter(Boolean);
+  }
+
+  // 同一个 Package 的不同架构合并成一张卡片（卡片 id 保持为 Package id，供 Depiction 锚点使用）
+  function groupStanzas(stanzas) {
+    var order = [];
+    var map = {};
+    stanzas.forEach(function (stanza) {
+      var id = stanza.Package;
+      if (!id) return;
+      if (!map[id]) {
+        map[id] = { id: id, versions: [], architectures: [], stanzas: [] };
+        order.push(id);
+      }
+      var group = map[id];
+      group.stanzas.push(stanza);
+      if (stanza.Version && group.versions.indexOf(stanza.Version) === -1) {
+        group.versions.push(stanza.Version);
+      }
+      group.architectures.push(stanza.Architecture || '');
+    });
+    return order.map(function (id) { return map[id]; });
+  }
+
+  /* ------------------------------ 渲染 ------------------------------ */
+
+  function renderCard(group) {
+    var first = group.stanzas[0] || {};
+    var name = first.Name || first.Package || '未命名插件';
+    var description = descriptionText(first);
+    var section = first.Section || '';
+    var depends = [];
+    group.stanzas.forEach(function (stanza) {
+      dependsList(stanza).forEach(function (dep) {
+        if (depends.indexOf(dep) === -1) depends.push(dep);
+      });
+    });
+
+    var icon = first.Icon && /^https?:\/\//i.test(first.Icon) ? first.Icon : DEFAULT_ICON;
+    var versionText = group.versions.length === 1 ? 'v' + group.versions[0] : group.versions.join(' / ');
+
+    var archBadges = group.stanzas.map(function (stanza) {
+      var arch = stanza.Architecture || '';
+      var label = ARCH_LABEL[arch] || arch || '未知架构';
+      var cls = ARCH_CLASS[arch] || 'badge-unknown';
+      var hint = ARCH_HINT[arch] || arch;
+      return '<span class="badge ' + cls + '" title="' + escapeHtml(hint) + '">' + escapeHtml(label) + '</span>';
+    }).join('');
+
+    var downloads = group.stanzas.map(function (stanza) {
+      var filename = stanza.Filename || '';
+      var arch = stanza.Architecture || '';
+      var label = ARCH_LABEL[arch] || arch;
+      var size = humanSize(stanza.Size);
+      var meta = label + (size ? ' · ' + size : '');
+      return '<a class="dl" href="' + escapeHtml(filename) + '" download>' +
+        '下载 .deb <small>' + escapeHtml(meta) + '</small></a>';
+    }).join('');
+
+    var depChips = depends.map(function (dep) {
+      return '<span class="chip">' + escapeHtml(dep) + '</span>';
+    }).join('');
+
+    var searchText = [
+      name,
+      group.id,
+      section,
+      description,
+      depends.join(' '),
+      group.architectures.join(' ')
+    ].join(' ').toLowerCase();
+
+    return '<article class="pkg" id="' + escapeHtml(group.id) + '" data-search="' + escapeHtml(searchText) + '">' +
+      '<div class="pkg-top">' +
+        '<img class="pkg-icon" src="' + escapeHtml(icon) + '" alt="" width="56" height="56" loading="lazy" ' +
+          'onerror="this.onerror=null;this.src=\'assets/package-icon-default.png\'">' +
+        '<div class="pkg-head">' +
+          '<h2 class="pkg-name">' + escapeHtml(name) + '</h2>' +
+          '<div class="pkg-id">' + escapeHtml(group.id) + '</div>' +
+        '</div>' +
+        '<div class="pkg-ver">' + escapeHtml(versionText) + '</div>' +
+      '</div>' +
+      '<div class="badges">' + archBadges +
+        (section ? '<span class="badge badge-section">' + escapeHtml(section) + '</span>' : '') +
+      '</div>' +
+      (description ? '<p class="pkg-desc">' + escapeHtml(description) + '</p>' : '') +
+      (depChips ? '<div class="chips"><span class="chips-label">依赖</span>' + depChips + '</div>' : '') +
+      '<div class="pkg-foot">' +
+        '<div class="dls">' + downloads + '</div>' +
+        (section ? '<div class="pkg-section">分类：' + escapeHtml(section) + '</div>' : '') +
+      '</div>' +
+    '</article>';
+  }
+
+  function applyFilter() {
+    var keyword = (els.search.value || '').trim().toLowerCase();
+    var cards = els.list.querySelectorAll('.pkg');
+    var visible = 0;
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      var haystack = card.getAttribute('data-search') || '';
+      var match = !keyword || haystack.indexOf(keyword) !== -1;
+      card.style.display = match ? '' : 'none';
+      if (match) visible++;
+    }
+    var total = state.groups.length;
+    if (keyword) {
+      els.count.textContent = '匹配 ' + visible + ' / 共 ' + total + ' 个插件';
+    } else {
+      els.count.textContent = '共 ' + total + ' 个插件 · ' + state.stanzaCount + ' 个架构版本';
+    }
+    var emptyTip = els.list.querySelector('.empty');
+    if (emptyTip) emptyTip.remove();
+    if (visible === 0 && total > 0) {
+      var div = document.createElement('div');
+      div.className = 'empty';
+      div.textContent = '没有匹配「' + keyword + '」的插件，换个关键词试试。';
+      els.list.appendChild(div);
+    }
+  }
+
+  function render(stanzas) {
+    state.groups = groupStanzas(stanzas);
+    state.stanzaCount = stanzas.length;
+    els.list.innerHTML = state.groups.map(renderCard).join('');
+    setStatus('', '');
+    applyFilter();
+    highlightFromHash();
+  }
+
+  /* --------------------------- 源信息与按钮 --------------------------- */
+
+  function setupSourceLinks() {
+    var src = sourceUrl();
+    els.srcUrl.textContent = src;
+    els.sileo.setAttribute('href', 'sileo://source/' + src);
+    els.cydia.setAttribute('href', 'cydia://url/https://cydia.saurik.com/api/share#?source=' + encodeURIComponent(src));
+  }
+
+  function copySource() {
+    var src = sourceUrl();
+
+    function copied() {
+      toast('源地址已复制：' + src);
+    }
+    function manual() {
+      var range = document.createRange();
+      range.selectNodeContents(els.srcUrl);
+      var selection = window.getSelection();
+      if (selection) {
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+      els.srcUrl.focus();
+      toast('自动复制失败，已选中地址，请长按复制：' + src, 6000);
+    }
+    function legacy() {
+      var textarea = document.createElement('textarea');
+      textarea.value = src;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.top = '-1000px';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+      document.body.removeChild(textarea);
+      if (ok) copied();
+      else manual();
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(src).then(copied, legacy);
+    } else {
+      legacy();
+    }
+  }
+
+  function highlightFromHash() {
+    var hash = '';
+    try { hash = decodeURIComponent(location.hash.replace(/^#/, '')); } catch (err) { hash = ''; }
+    if (!hash) return;
+    var target = document.getElementById(hash);
+    if (!target) {
+      var byName = els.list.querySelector('.pkg[data-search*="' + hash.toLowerCase().replace(/"/g, '') + '"]');
+      target = byName;
+    }
+    if (!target) return;
+    target.classList.add('flash');
+    if (typeof target.scrollIntoView === 'function') {
+      try { target.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (err) { target.scrollIntoView(); }
+    }
+    setTimeout(function () { target.classList.remove('flash'); }, 2400);
+  }
+
+  /* ------------------------------ 加载索引 ------------------------------ */
+
+  function loadReleaseMeta() {
+    fetch('Release', { cache: 'no-store' }).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.text();
+    }).then(function (text) {
+      var stamp = null;
+      var lines = text.split(/\r\n|\r|\n/);
+      for (var i = 0; i < lines.length; i++) {
+        if (/^Date:\s*/.test(lines[i])) {
+          var raw = lines[i].replace(/^Date:\s*/, '').trim();
+          var parsed = new Date(raw);
+          if (!isNaN(parsed.getTime())) stamp = parsed;
+          break;
+        }
+      }
+      if (stamp) {
+        function pad2(n) { return n < 10 ? '0' + n : String(n); }
+        var text2 = '最后构建：' + stamp.getFullYear() + '-' + pad2(stamp.getMonth() + 1) + '-' +
+          pad2(stamp.getDate()) + ' ' + pad2(stamp.getHours()) + ':' + pad2(stamp.getMinutes());
+        var existing = els.repoMeta.textContent.split(' · ');
+        existing[0] = text2;
+        els.repoMeta.textContent = existing.filter(Boolean).join(' · ');
+      }
+    }).catch(function () {
+      /* 源元数据读取失败不影响主列表 */
+    });
+  }
+
+  function showError(err) {
+    var detail = err && err.message ? err.message : String(err || '未知错误');
+    var isFile = location.protocol === 'file:';
+    var extra = isFile
+      ? '<p>当前是 <code>file://</code> 本地打开，浏览器会拦截 <code>fetch</code>。请用 <code>./tools/serve.sh</code> 起本地 HTTP 服务预览，或部署到 GitHub Pages 后访问线上地址。</p>'
+      : '<p>请确认站点根目录下有生成的 <code>Packages</code> 索引（没有就先运行 <code>./tools/build.sh</code>），并检查网络后刷新页面。</p>';
+    setStatus(
+      '<div class="panel error">' +
+        '<h2>无法读取源索引</h2>' +
+        '<p>请求 <code>Packages</code> 失败：' + escapeHtml(detail) + '。</p>' +
+        extra +
+        '<p>索引文件直链：<a href="Packages">Packages</a> · 源元数据：<a href="Release">Release</a></p>' +
+      '</div>',
+      ''
+    );
+    els.count.textContent = '读取失败';
+    els.repoMeta.textContent = '源索引读取失败，请按提示检查部署。';
+  }
+
+  function load() {
+    setStatus('<div class="panel"><span class="spinner" aria-hidden="true"></span>正在读取 Packages 索引…</div>', 'loading');
+    els.count.textContent = '加载中…';
+    fetch('Packages', { cache: 'no-store' })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.text();
+      })
+      .then(function (text) {
+        var stanzas = parsePackages(text);
+        if (!stanzas.length) {
+          setStatus(
+            '<div class="panel"><h2>源里还没有插件</h2>' +
+            '<p>索引可以正常读取，但源里还没有发布任何插件。维护者发布后，这里会自动显示。</p></div>',
+            ''
+          );
+          els.count.textContent = '共 0 个插件';
+          return;
+        }
+        render(stanzas);
+        var archs = {};
+        stanzas.forEach(function (stanza) { archs[stanza.Architecture || ''] = true; });
+        var archCount = Object.keys(archs).length;
+        els.repoMeta.textContent = '共 ' + stanzas.length + ' 个架构版本 · ' + archCount + ' 种架构 · 数据来自 Packages';
+        loadReleaseMeta();
+      })
+      .catch(function (err) {
+        showError(err);
+      });
+  }
+
+  /* ------------------------------ 事件绑定 ------------------------------ */
+
+  els.copy.addEventListener('click', copySource);
+  els.search.addEventListener('input', applyFilter);
+  els.search.addEventListener('search', applyFilter);
+  els.sileo.addEventListener('click', function (event) {
+    if (location.protocol === 'file:') {
+      event.preventDefault();
+      toast('请先通过 http(s) 打开本页，再点「添加到 Sileo」。', 4200);
+    }
+  });
+
+  setupSourceLinks();
+  load();
+})();
+</script>
+</body>
+</html>

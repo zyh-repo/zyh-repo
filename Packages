@@ -1,0 +1,22 @@
+Package: com.rein.bydwalkup
+Name: 比亚迪蓝牙感应解锁
+Version: 1.0
+Architecture: iphoneos-arm64e
+Section: Tweaks
+Maintainer: zyh
+Author: zyh
+Depends: firmware (>= 15.0), mobilesubstrate
+Installed-Size: 160
+Icon: https://zyh-repo.github.io/zyh-repo/icons/com.rein.bydwalkup.png
+Depiction: https://zyh-repo.github.io/zyh-repo/#com.rein.bydwalkup
+Filename: debs/com.rein.bydwalkup_1.0_iphoneos-arm64e.deb
+Size: 41876
+MD5sum: 5e288e860cb78e1f7fbc9d289ff3954d
+SHA256: 6b18ecda224759d37f4624118fd6127786c258956f671766a020bdebe59fdee3
+Description: 比亚迪蓝牙感应解锁 v1.0（全新插件，作者 zyh）
+ 读取官方比亚迪 App 的蓝牙信号强度，靠近自动解锁、离开自动上锁。
+ 支持锁车熄火、后台保活、选择感应距离（校准）、手动设置信号阈值、测试日志。
+ 内置首页快捷开关：替换官方能耗模块，与设置页双向同步。
+ 同一指令 10 秒内不重复发送。
+ 首页「反馈&建议」可直接联系作者（QQ 1123124397），点击打开 QQ 资料卡。
+ 仅注入官方比亚迪 App（com.byd.BYDi），不修改 App 包内文件；需要越狱环境。

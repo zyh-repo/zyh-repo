@@ -1,0 +1,34 @@
+# ============================================================
+#  自动同步关注列表（GitHub Actions 每天自动读取本文件）
+#  每行一个源，格式：
+#       <源地址> 包名 [包名 ...]  [参数...]
+#  可用参数：
+#       --all            同步该源全部插件
+#       --all-versions   同包同架构的旧版本也同步（默认只取最新版）
+#       --backup-only    只备份到本地，不发布进「ZYH 自用」源
+#  ⚠️ 只同步你有权分发的内容；第三方插件（尤其付费/授权类）公开再分发可能侵权。
+#  改完保存，GitHub Actions 下一次运行即生效（也可到 Actions 手动 Run workflow）。
+# ============================================================
+
+# ---------- 你圈出要自动同步的插件（2026-10-31 截图）----------
+# 说明：下面这些插件需要填「它所在的源地址」才能自动拉取。
+# 查源地址：Sileo → 底部「来源」→ 找到插件所在的那个源 → 右上角「…」/ 长按
+#           → 复制源地址（形如 https://xxx 或 https://xxx/）。
+# 把地址填到每行开头、核对包名后，删掉行首的 # 即可启用。
+#
+#   【已识别出的圈选插件】
+# # <源地址>  jade                  （Jade）
+# # <源地址>  lunora                （Lunora…，包名待核对）
+# # <源地址>  shuffle               （Shuffle；如来自 CreatureSurvive 源则填
+#                                    https://creaturecoding.com/repo，包名 com.creaturecoding.shuffle）
+# # <源地址>  stayalive             （StayAlive Lite，包名待核对）
+# # <源地址>  supervip              （SuperVIP）
+# # <源地址>  appprotect            （AppProtect）
+# # <源地址>  apptools              （AppTools）
+# # <源地址>  trollopen             （TrollOpen）
+#   【截图上部另有 4 个圈选插件名字太小没读出来，请把名字发我或直接按上面格式补行】
+#
+# ---------- 示例（参考格式，行首带 # 未启用）----------
+# https://repo.chariz.com  com.laughingquoll.prefixui
+# https://repo.chariz.com  com.laughingquoll.prefixui --backup-only   # 只备份不发布
+# https://repo.dynastic.co  --all                                     # 整源同步
