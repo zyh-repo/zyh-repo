@@ -32,5 +32,5 @@
 # https://repo.chariz.com  com.laughingquoll.prefixui
 # https://repo.chariz.com  com.laughingquoll.prefixui --backup-only   # 只备份不发布
 # https://repo.dynastic.co  --all                                     # 整源同步
- http://apt.htv123.com  com.xybp888.callassist17.roothide
- http://apt.htv123.com  com.xybp888.perfectdynamiclsland17.roothide
+ http://apt.htv123.com  com.xybp888.callassist17.roothide --no-verify
+ http://apt.htv123.com  com.xybp888.perfectdynamiclsland17.roothide --no-verify
