@@ -1,0 +1,58 @@
+# ZYH 自用 越狱源 —— 自己上传插件后自动重建索引
+#
+# 触发方式（满足其一）：
+#   1) 往 debs/ 或 icons/ 上传 / 修改文件并推送（电脑网页上传、git push 均可）；
+#   2) 到 Actions 标签 → 本工作流 → Run workflow 手动运行。
+#
+# 流程：重建 Packages / Packages.gz|bz2|xz / Release → 全量校验
+#       → 有实质变化自动提交 → GitHub Pages 自动更新。
+#
+# 用法：把自己打的插件 deb 保持原文件名，上传到仓库 debs/ 目录即可；
+#       图标（256×256 PNG，文件名 = 包名.png）上传到 icons/ 目录。
+#       不需要运行任何命令，推送后本工作流自动完成剩下的一切。
+
+name: 上传插件自动重建
+
+on:
+  push:
+    paths:
+      - 'debs/**'
+      - 'icons/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: zyh-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 重建索引并全量校验
+        env:
+          TMPDIR: /tmp/zyh-tmp
+        run: |
+          mkdir -p /tmp/zyh-tmp && chmod 777 /tmp/zyh-tmp
+          bash tools/build.sh --verbose
+          bash tools/verify.sh
+
+      - name: 提交并推送变更
+        run: |
+          git config user.name "zyh-build[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          CHANGED="$(git diff --cached --name-only | sort)"
+          if [ -z "$CHANGED" ]; then
+            echo "无变化，跳过提交"
+          elif [ "$(printf '%s' "$CHANGED" | tr -d '\n')" = "Release" ]; then
+            echo "仅 Release 时间戳变化（内容无更新，通常由同步工作流触发），跳过提交"
+          else
+            git commit -m "重建索引（手动上传插件，$(date -u +%Y-%m-%d %H:%M UTC)）"
+            git push
+          fi

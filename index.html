@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="ZYH 自用">
 <meta property="og:description" content="个人 iOS 越狱源 · 自用插件与工具，Sileo / Zebra / Cydia 均可添加。">
-<meta property="og:image" content="banner.png">
+<meta property="og:image" content="assets/banner.png">
 <link rel="icon" href="CydiaIcon.png">
 <link rel="apple-touch-icon" href="CydiaIcon.png">
 <style>
@@ -422,7 +422,7 @@
 <div class="page">
   <header class="hero">
     <div class="hero-banner-wrap">
-      <img class="hero-banner" src="banner.png" alt="ZYH 自用 越狱源横幅" width="1600" height="900">
+      <img class="hero-banner" src="assets/banner.png" alt="ZYH 自用 越狱源横幅" width="1600" height="900">
       <div class="hero-banner-fade" aria-hidden="true"></div>
     </div>
     <div class="hero-body">
@@ -498,7 +498,7 @@
 (function () {
   'use strict';
 
-  var DEFAULT_ICON = 'package-icon-default.png';
+  var DEFAULT_ICON = 'assets/package-icon-default.png';
   var ARCH_LABEL = {
     'iphoneos-arm': 'rootful',
     'iphoneos-arm64': 'rootless',
@@ -717,7 +717,7 @@
     return '<article class="pkg" id="' + escapeHtml(group.id) + '" data-search="' + escapeHtml(searchText) + '">' +
       '<div class="pkg-top">' +
         '<img class="pkg-icon" src="' + escapeHtml(icon) + '" alt="" width="56" height="56" loading="lazy" ' +
-          'onerror="this.onerror=null;this.src=\'package-icon-default.png\'">' +
+          'onerror="this.onerror=null;this.src=\'assets/package-icon-default.png\'">' +
         '<div class="pkg-head">' +
           '<h2 class="pkg-name">' + escapeHtml(name) + '</h2>' +
           '<div class="pkg-id">' + escapeHtml(group.id) + '</div>' +

@@ -1,21 +1,13 @@
-# ZYH 自用 越狱源 —— 云端自动同步插件（GitHub Actions）
+# ZYH 自用 越狱源 —— 云端自动同步插件（GitHub Actions · 标准目录版）
 #
-# 用途：每天定时拉取 sync-sources.txt 里配置的源/插件，导入本源，
-#       重建索引、校验、生成扁平部署文件并自动提交 → GitHub Pages 自动更新。
+# 仓库根即站点根：debs/、icons/、assets/、tools/ 直接放在仓库里，
+# GitHub Pages 原样发布，不需要扁平部署包，也不需要 zyh-sync.zip。
 #
-# 首次配置（一次性，手机网页即可完成）：
-#   1) 把 zyh-sync.zip（源工具包）上传到仓库根目录；
-#   2) 仓库页 Add file → Create new file，文件名填
-#        .github/workflows/sync.yml
-#      内容粘贴本文件全文（GitHub 会自动创建文件夹）；
-#   3) 仓库 Settings → Actions → General → Workflow permissions
-#      选 Read and write permissions → Save；
-#   4) 打开 Actions 标签 → 左侧「ZYH 自动同步插件」→ Run workflow 手动跑一次验证。
+# 用途：每天定时按 sync-sources.txt 拉取插件（保持原文件名，放入 debs/），
+#       重建索引、全量校验，有变化自动提交 → GitHub Pages 自动更新。
 #
-# 以后：
-#   - 改关注列表：直接在仓库网页编辑 sync-sources.txt 即可（不用再传 zip）。
-#   - 每天北京时间 04:00 自动跑一次；也可随时在 Actions 里手动 Run workflow。
-#   - 某插件只备份不想发布：在对应行行尾加 --backup-only。
+# 已不需要的旧文件：zyh-sync.zip、根目录下的 1000.deb / 1122.deb 等扁平文件
+# （从电脑重新上传标准目录结构后即可删除）。
 
 name: ZYH 自动同步插件
 
@@ -39,32 +31,13 @@ jobs:
       - name: 检出仓库
         uses: actions/checkout@v4
 
-      - name: 解压源工具包
-        run: |
-          rm -rf src && mkdir -p src
-          unzip -q zyh-sync.zip -d src
-          if [ -f sync-sources.txt ]; then cp -f sync-sources.txt src/; fi
-
-      - name: 同步插件（下载→校验→导入本源→重建→校验）
-        working-directory: src
+      - name: 同步插件（下载→校验→导入 debs/→重建索引→全量校验）
         env:
           MIRROR_VERIFY_SSL: "1"
-        run: bash tools/mirror.sh sync --publish
-
-      - name: 生成扁平部署文件
-        working-directory: src
-        run: bash tools/flat-upload.sh /tmp/flat >/dev/null
-
-      - name: 覆盖仓库根（保留工具包/配置/工作流）
+          TMPDIR: /tmp/zyh-tmp
         run: |
-          rm -f ZYH-部署状态.json
-          rm -rf ZYH-源部署包 ZYH-源部署包.zip src
-          find . -maxdepth 1 -type f \
-            ! -name 'zyh-sync.zip' \
-            ! -name 'sync-sources.txt' \
-            -delete
-          cp -f /tmp/flat/* ./
-          cp -f /tmp/flat/.nojekyll ./ 2>/dev/null || true
+          mkdir -p /tmp/zyh-tmp && chmod 777 /tmp/zyh-tmp
+          bash tools/mirror.sh sync --publish
 
       - name: 提交并推送变更
         run: |

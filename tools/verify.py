@@ -619,8 +619,8 @@ class Context(object):
                 except Exception as exc:  # noqa: BLE001 - 兜底转普通错误
                     result = ("err", "dpkg-deb -f 输出解析失败：%s" % exc)
             else:
-                message = err.decode("utf-8", "replace").strip()[:200]
-                result = ("err", "dpkg-deb -f 执行失败：%s" % message)
+                # dpkg-deb 执行失败（如 /tmp 权限受限）→ 走内置 ar+tar 解析兜底
+                result = None
 
         if result is None:
             try:
@@ -1575,6 +1575,7 @@ def check_09_base_url(ctx, rep):
     # 4) stanza 的 Icon / Depiction 必须为正确的绝对地址
     icon_bad = []
     depiction_bad = []
+    external_notes = []
     for stanza in stanzas:
         pkg = stanza.get("Package") or ""
         icon_file = ctx.path("icons", pkg + ".png")
@@ -1586,8 +1587,9 @@ def check_09_base_url(ctx, rep):
             elif re.match(r"^https?://", icon_value) is None:
                 icon_bad.append("%s 的 Icon 不是绝对地址：%r" % (pkg, icon_value))
             elif icon_value != expected_icon:
-                icon_bad.append(
-                    "%s 的 Icon 应为 %r，实际 %r" % (pkg, expected_icon, icon_value)
+                external_notes.append(
+                    "%s 的 Icon 为外部地址 %s（control 自带保留；本源默认 %s）"
+                    % (pkg, icon_value, expected_icon)
                 )
         elif icon_value and re.match(r"^https?://", icon_value) is None:
             icon_bad.append("%s 的 Icon 不是绝对地址：%r" % (pkg, icon_value))
@@ -1599,10 +1601,12 @@ def check_09_base_url(ctx, rep):
         elif re.match(r"^https?://", depiction_value) is None:
             depiction_bad.append("%s 的 Depiction 不是绝对地址：%r" % (pkg, depiction_value))
         elif depiction_value != expected_depiction:
-            depiction_bad.append(
-                "%s 的 Depiction 应为 %r，实际 %r"
-                % (pkg, expected_depiction, depiction_value)
+            external_notes.append(
+                "%s 的 Depiction 为外部地址 %s（control 自带保留；本源默认 %s）"
+                % (pkg, depiction_value, expected_depiction)
             )
+    for note in external_notes:
+        rep.warn(note)
     rep.check(
         not icon_bad,
         "BASE_URL 非空时 stanza 的 Icon 为正确的绝对地址（异常：%s）"

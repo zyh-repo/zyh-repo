@@ -391,32 +391,36 @@ git add -A && git commit -m "publish: 新 deb" && git push
 
 > 手机上也可以直接用本仓库的 `tools/` 脚本：`./tools/publish.sh ...`、`./tools/build.sh`、`./tools/verify.sh`；如果手机终端没有 `bash` 在标准路径，改成 `bash tools/build.sh` 这种写法调用（见文首小提示）。
 
-### 方式 E：GitHub Actions 全自动同步（一次配置，以后不用管）
+### 方式 E：GitHub Actions 全自动同步（标准目录结构，电脑/网页均可）
 
-云端每天定时：按 `sync-sources.txt` 关注列表拉取插件 → 校验 → 导入本源 →
-重建索引 → 自动提交，GitHub Pages 自动更新。全部在 GitHub 上完成，手机网页即可配置。
+**仓库根 = 站点根**：把整个 `ZYH-Repo` 的内容（含 `debs/`、`icons/`、`assets/`、`tools/`
+文件夹）直接上传到 GitHub 仓库根。电脑上拖拽上传文件夹没限制，不需要扁平部署包，
+也不需要 `zyh-sync.zip`（旧流程产物，可删除）。
 
-**首次配置（约 3 分钟，只做一次）**
+**首次配置（只做一次）**
 
-1. 把 `zyh-sync.zip`（源工具包，在仓库上一级目录）上传到 GitHub 仓库**根目录**；
-2. 仓库页 **Add file → Create new file**，文件名填 `.github/workflows/sync.yml`，
-   内容粘贴 `tools/gh-actions/sync.yml` 的全文（GitHub 会自动创建文件夹）；
+1. 把 `ZYH-Repo.zip` 解压后的**全部内容**（含文件夹）上传到仓库根；
+   （若仓库里还有旧扁平文件：根目录的 `1000.deb`、`1122.deb`、`banner.png`、
+   `package-icon-default.png`、`com.rein.bydwalkup*.deb/.png`、`部署说明.md`、
+   `zyh-sync.zip` 等，全部删除——它们已被标准目录取代）
+2. 仓库页 **Add file → Create new file** 分别创建两个工作流（内容复制
+   `tools/gh-actions/` 下同名文件全文，GitHub 会自动建文件夹）：
+   - `.github/workflows/sync.yml` —— 每天定时同步 `sync-sources.txt` 里的插件；
+   - `.github/workflows/build-on-upload.yml` —— 自己上传插件后自动重建索引；
 3. **Settings → Actions → General → Workflow permissions** 选 **Read and write permissions** → Save；
-4. **Actions** 标签 → 左侧「ZYH 自动同步插件」→ **Run workflow** 手动跑一次验证。
+4. **Actions** 标签 → 「ZYH 自动同步插件」→ **Run workflow** 跑一次。
 
 **日常使用**
 
-- 改关注列表：直接在仓库网页编辑 `sync-sources.txt`（不用再传 zip）。
-- 每天北京时间 04:00 自动跑一次；想立刻同步就到 Actions 手动 Run workflow。
+- 同步的插件保持**原文件名**放进 `debs/`（如 htv123 的 `1000.deb`、`1122.deb`），
+  索引里 `Filename: debs/1000.deb`，Sileo 按 `debs/` 相对路径下载。
+- 改关注列表：直接编辑仓库根 `sync-sources.txt`。
+- 每天北京时间 04:00 自动跑；想立刻同步就手动 Run workflow。
 - 某插件只想备份不发布：对应行行尾加 `--backup-only`。
-- 同步失败会在 Actions 日志里标红并列出失败源/URL，不影响已成功的包。
+- 自己上传插件：把 deb 拖进仓库 `debs/`（图标放 `icons/<包名>.png`）→ 提交 →
+  「上传插件自动重建」工作流自动重建索引+校验+提交，Pages 自动更新，无需任何命令。
 
-> 流程说明：workflow 解压 `zyh-sync.zip` 得到源码树 → 跑 `tools/mirror.sh sync --publish`
-> （下载→Size/MD5/SHA256 校验→导入 debs/→重建索引→`verify.sh` 全量校验）
-> → `tools/flat-upload.sh` 生成扁平部署文件覆盖仓库根 → 有变化才自动 commit+push。
-> 证书环境由 GitHub 提供（`MIRROR_VERIFY_SSL=1`），本机模拟测试已通过。
-
-### 方式 D：源部署包（网页上传不支持文件夹时用这个）
+### 方式 D：源部署包（手机网页上传、无法建文件夹时才用）
 
 网页上传界面只能选文件、不能选文件夹，手机浏览器尤其如此。解决办法：把源转成「所有文件都在同一层」的部署包（只含源本身，不含任何插件）。
 

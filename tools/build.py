@@ -227,9 +227,10 @@ def read_deb_control(deb_path):
         if proc is not None and proc.returncode == 0 and proc.stdout.strip():
             return proc.stdout.decode("utf-8")
         if proc is not None and proc.returncode != 0:
-            raise BuildError(
-                "dpkg-deb 无法读取 %s：%s"
-                % (os.path.basename(deb_path), proc.stderr.decode("utf-8", "replace").strip())
+            warn(
+                "dpkg-deb 无法读取 %s（%s），改用内置解析器兜底"
+                % (os.path.basename(deb_path),
+                   proc.stderr.decode("utf-8", "replace").strip())
             )
     return _read_deb_control_fallback(deb_path)
 

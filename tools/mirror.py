@@ -11,13 +11,16 @@
 - 源地址可以是源根地址（自动找 Packages / Packages.xz / .bz2 / .gz），
   也可以直接给 Packages 索引完整地址。
 - 下载后按该源 Packages 里的 Size / MD5sum / SHA256 校验，防截断 / 被篡改。
-- --publish 会把 deb 拷进本仓库 debs/，图标（若源里写了绝对 Icon 地址）拷进 icons/；
+- --publish 会把 deb 拷进本仓库 debs/（文件名直接用插件包名 <Package>.deb；
+  同包不同架构/版本并存时，其余文件自动改用 <Package>_<Version>_<Architecture>.deb），
+  图标（若源里写了绝对 Icon 地址）拷进 icons/；
   之后由 mirror.sh 自动重建索引、校验并生成部署包上传清单。
 - 只备份你有权备份的内容；把第三方源里的插件（尤其付费 / 授权插件）公开再分发可能侵权。
 """
 
 import argparse
 import hashlib
+from collections import Counter
 import json
 import os
 import re
@@ -465,6 +468,9 @@ def cmd_pull(args):
     selected = select_stanzas(stanzas, args.packages, args.arch, args.filter)
     if not selected:
         die("该源里没有匹配的插件（用 list 子命令查看包名）")
+    # 命名规则：本次要同步的条目中，某包只有一条 → <包名>.deb（升级直接覆盖同名文件）；
+    # 某包有多条（多架构/多版本）→ 全部用 <包名>_<版本>_<架构>.deb，避免互相覆盖。
+    package_counts = Counter(stanza.get("Package") for stanza in selected)
     if not args.all_versions:
         newest = {}
         for stanza in selected:
@@ -505,29 +511,74 @@ def cmd_pull(args):
             continue
         url = resolve_url(root, filename)
         rel = safe_relpath(filename)
-        target = os.path.join(repo, "debs", os.path.basename(rel)) if args.publish else os.path.join(out_dir, rel)
+        if args.publish:
+            # 同步进本源：文件名直接用插件包名（<Package>.deb）；多条目时用全名避免覆盖
+            if package_counts.get(pkg, 0) > 1:
+                target = os.path.join(repo, "debs", "%s_%s_%s.deb" % (pkg, version, arch))
+            else:
+                target = os.path.join(repo, "debs", pkg + ".deb")
+        else:
+            target = os.path.join(out_dir, rel)
         try:
             if os.path.isfile(target) and not args.force:
                 data = open(target, "rb").read()
-                verify_bytes(data, stanza, label)
-                print("  [已存在] %-46s %s" % (label, human_size(len(data))))
-                skipped += 1
-                results.append({"package": pkg, "version": version, "architecture": arch,
-                                "filename": os.path.basename(rel), "size": len(data), "status": "exists"})
-                continue
+                try:
+                    verify_bytes(data, stanza, label)
+                    print("  [已存在] %-46s %s" % (label, human_size(len(data))))
+                    skipped += 1
+                    results.append({"package": pkg, "version": version, "architecture": arch,
+                                    "filename": os.path.basename(target), "size": len(data), "status": "exists"})
+                    continue
+                except MirrorError:
+                    if args.no_verify:
+                        warn("%s 本地已存在但哈希与索引不符（--no-verify，保留使用）" % label)
+                        print("  [已存在] %-46s %s" % (label, human_size(len(data))))
+                        skipped += 1
+                        results.append({"package": pkg, "version": version, "architecture": arch,
+                                        "filename": os.path.basename(target), "size": len(data), "status": "exists"})
+                        continue
+                    warn("%s 同名文件内容与索引不符（可能是旧版本），重新下载覆盖" % label)
             if args.dry_run:
                 print("  [预览] %-46s ← %s" % (label, url))
                 previewed += 1
                 continue
             print("  [下载] %-46s ← %s" % (label, url))
-            data = download_deb(url, stanza, args.verify_ssl)
+            data = None
+            try:
+                data = download_deb(url, stanza, args.verify_ssl)
+            except MirrorError as exc:
+                if "校验失败" not in str(exc):
+                    raise
+                # 哈希不符：换普通 GET 重试一次（部分 CDN 对 Range 请求返回不同内容）
+                try:
+                    data = _fetch_plain(url, args.verify_ssl, timeout=180)
+                    verify_bytes(data, stanza, label)
+                    warn("%s 分块下载哈希不符，改用普通 GET 重下后校验通过" % label)
+                except Exception as exc2:  # noqa: BLE001
+                    if args.no_verify:
+                        try:
+                            data = _fetch_plain(url, args.verify_ssl, timeout=180)
+                        except Exception:  # noqa: BLE001
+                            data = fetch(url, verify_ssl=args.verify_ssl, timeout=180)
+                        warn("%s 哈希仍与索引不符，已按 --no-verify 跳过校验（%s）" % (label, exc2))
+                    else:
+                        raise MirrorError(
+                            "%s：%s（若确认是该源索引哈希过期，可在 sync-sources.txt 对应行加 --no-verify 跳过校验）"
+                            % (label, exc2)
+                        )
+            if data is None or data[:8] != b"!<arch>\n":
+                raise MirrorError("%s 下载内容不是合法 deb（缺少 ar 头），已放弃" % label)
             os.makedirs(os.path.dirname(target) or target.rsplit(os.sep, 1)[0], exist_ok=True)
             with open(target, "wb") as fh:
                 fh.write(data)
+            try:
+                os.chmod(target, 0o644)
+            except OSError:
+                pass
             print("  [完成] %-46s %s  校验通过" % (label, human_size(len(data))))
             downloaded += 1
             results.append({"package": pkg, "version": version, "architecture": arch,
-                            "filename": os.path.basename(rel), "size": len(data),
+                            "filename": os.path.basename(target), "size": len(data),
                             "md5": hashlib.md5(data).hexdigest(),
                             "sha256": hashlib.sha256(data).hexdigest(), "status": "downloaded"})
             # 图标（仅 --publish 且源里写了绝对 Icon 地址）
@@ -632,6 +683,8 @@ def build_parser():
     p_pull.add_argument("--no-icons", action="store_true", help="导入时不下载图标")
     p_pull.add_argument("--dry-run", action="store_true", help="只看会下载什么，不实际下载")
     p_pull.add_argument("--force", action="store_true", help="已存在也重新下载")
+    p_pull.add_argument("--no-verify", action="store_true",
+                        help="跳过 Size/MD5/SHA256 校验（仅当源索引哈希过期时用；仍会检查文件是合法 deb）")
     p_pull.add_argument("--verify-ssl", action="store_true", help="校验证书（默认跳过）")
     p_pull.set_defaults(func=cmd_pull)
     return parser
