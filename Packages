@@ -7,9 +7,9 @@ Maintainer: zyh
 Author: zyh
 Depends: firmware (>= 15.0), mobilesubstrate
 Installed-Size: 160
-Icon: https://zyh-repo.github.io/zyh-repo/icons/com.rein.bydwalkup.png
+Icon: https://zyh-repo.github.io/zyh-repo/com.rein.bydwalkup.png
 Depiction: https://zyh-repo.github.io/zyh-repo/#com.rein.bydwalkup
-Filename: debs/com.rein.bydwalkup_1.0_iphoneos-arm64e.deb
+Filename: com.rein.bydwalkup_1.0_iphoneos-arm64e.deb
 Size: 41876
 MD5sum: 5e288e860cb78e1f7fbc9d289ff3954d
 SHA256: 6b18ecda224759d37f4624118fd6127786c258956f671766a020bdebe59fdee3
