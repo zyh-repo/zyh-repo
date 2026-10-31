@@ -20,3 +20,37 @@ Description: 比亚迪蓝牙感应解锁 v1.0（全新插件，作者 zyh）
  同一指令 10 秒内不重复发送。
  首页「反馈&建议」可直接联系作者（QQ 1123124397），点击打开 QQ 资料卡。
  仅注入官方比亚迪 App（com.byd.BYDi），不修改 App 包内文件；需要越狱环境。
+
+Package: com.xybp888.callassist17.roothide
+Name: 电话助手iOS17-正式版(Roothide)
+Version: 2.4.2
+Architecture: iphoneos-arm64e
+Section: Tweaks
+Priority: optional
+Maintainer: xybp888
+Author: xybp888
+Depends: firmware (>= 17.0), preferenceloader, com.opa334.libsandy
+Depiction: https://apt.htv123.com/view/1122
+Filename: debs/com.xybp888.callassist17.roothide_2.4.2_iphoneos-arm64e.deb
+Size: 3586330
+MD5sum: b645bd7258939e5bc553c69bc02465ce
+SHA256: d0e05077583e21ceca2808232094c53d3a717b99232e0df062284baf61f63dab
+Description: 电话助手授权版本,通话录音,通话记录合并,T9双卡选卡拨号键盘,短信双卡选卡,来去电归属地,黑名单,骚扰拦截,状态栏图标替换,时间格式修改,常用小功能等强大插件
+
+Package: com.xybp888.perfectdynamiclsland17.roothide
+Name: 灵动通知iOS17-正式版(Roothide)
+Version: 1.1.0
+Architecture: iphoneos-arm64e
+Section: System
+Priority: optional
+Maintainer: xybp888
+Author: xybp888
+Depends: firmware (>= 17.0), preferenceloader, com.opa334.libsandy
+Depiction: https://apt.htv123.com/view/1000
+Filename: debs/com.xybp888.perfectdynamiclsland17.roothide_1.1.0_iphoneos-arm64e.deb
+Size: 973396
+MD5sum: fd7217705397b1e6d4c8478648803c29
+SHA256: 854c6849ebebbdcdc060d7c656a2e4c96659d18ad056f2d5d62abe90059587cc
+Description: 电话助手激活用户专属免费插件
+ 完美的使用原生灵动岛展示系统通知等...
+ iOS17 的半越狱专用版本
