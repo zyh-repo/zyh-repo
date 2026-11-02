@@ -43,13 +43,15 @@ Depends: firmware (>= 15.0), mobilesubstrate
 Installed-Size: 160
 Depiction: https://zyh-repo.github.io/zyh-repo/#com.zyh.bydpke
 Filename: debs/com.zyh.bydpke_1.0_iphoneos-arm64.deb
-Size: 42164
-MD5sum: 5023492db257c1c7b779e300510ce806
-SHA256: 01ca4deb4a9ec452f3002059ab46fe4907666faec6afedf627060e31c98fdd43
+Size: 42568
+MD5sum: fbddf19d0cdad7dcb3c9d20c812a3c49
+SHA256: 884c5fe404de209fc5a4d5ac811c241e2c6d2370e5592bfefd2ecd9e9d71be2a
 Description: 比亚迪蓝牙感应解锁
  插件用于比亚迪汽车靠近自动解锁、离开自动上锁。
  支持锁车熄火、后台保活等。
- 内置替换官方能耗模块，免费版无安全场景判定，如行驶中、未关门不执行任何操作等。
+ 内置替换官方能耗模块。
+ 免费版仅提供基础功能（无安全场景判定与车机直连），
+ 需要更多功能请在插件页「反馈&建议」联系作者。
 
 Package: com.zyh.bydpke
 Name: 比亚迪蓝牙感应解锁
@@ -62,10 +64,12 @@ Depends: firmware (>= 15.0), mobilesubstrate
 Installed-Size: 160
 Depiction: https://zyh-repo.github.io/zyh-repo/#com.zyh.bydpke
 Filename: debs/com.zyh.bydpke_1.0_iphoneos-arm64e.deb
-Size: 42412
-MD5sum: 45e29765cfc653a11c90eb1d995bb20f
-SHA256: 408c16de4f3533335470c21369270dd2243092bde90ba67e3a9f1fd7f44b795e
+Size: 42784
+MD5sum: b2a5c57412a9d22caeb480b17202af21
+SHA256: ad2ce7e7243e2443c2dfcc56adaae1792eeefc8eaca6692dce7317f7b6662e4c
 Description: 比亚迪蓝牙感应解锁
  插件用于比亚迪汽车靠近自动解锁、离开自动上锁。
  支持锁车熄火、后台保活等。
- 内置替换官方能耗模块，免费版无安全场景判定，如行驶中、未关门不执行任何操作等。
+ 内置替换官方能耗模块。
+ 免费版仅提供基础功能（无安全场景判定与车机直连），
+ 需要更多功能请在插件页「反馈&建议」联系作者。
