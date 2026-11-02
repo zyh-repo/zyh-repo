@@ -3,18 +3,18 @@ Label: ZYH 自用
 Suite: stable
 Version: 1.0
 Codename: zyh
-Architectures: iphoneos-arm64e
+Architectures: iphoneos-arm64 iphoneos-arm64e
 Components: main
 Description: ZYH 的个人自用越狱源
  收录自用插件与工具，按需发布。
-Date: Mon, 02 Nov 2026 07:01:28 +0000
+Date: Mon, 02 Nov 2026 07:03:28 +0000
 MD5Sum:
- 810aa47ccaa969e2c7e82ca21e098414 1428 Packages
- aa5ccf76ffd6f84a3699abd035c944fb 945 Packages.bz2
- 0dce0c1e7f281f9695141ea8aeabb18e 837 Packages.gz
- b7d6e937937ccbc1800a64a5e8579315 840 Packages.xz
+ 1cfed02e7a638c1f35955767020429c0 3038 Packages
+ f072d9738cbaa628fb8ed603291d6284 1581 Packages.bz2
+ 7cdc711f8afda7d1836c3351c6b9a859 1370 Packages.gz
+ d195255b25547da28d271ed1b6b94a19 1312 Packages.xz
 SHA256:
- 86b9e9425177a6878c6ebb75b659b31600f8dae1a5772b12efe9c4b48eba16b4 1428 Packages
- 4aa06c6eed7555e30f13f4017e92a91ced132e35cdaab6e43485040cfda1ede5 945 Packages.bz2
- 4fbe1d1c571bafa6ef211fce2c4ccb43c6f532fd1bcb5c4a4da2cadd110eb08a 837 Packages.gz
- e5f52aebd390da31fcfc2c9856adddd8c70d30780a9f61afaf3856fb7c82cf50 840 Packages.xz
+ 1e61bbff34f1654a1ee3adf485707b04c25b1facaeb9a879c2001609471fe2bc 3038 Packages
+ 6810289ee57b33c19d5da3ffbd796a1bc7886532bb0ac7f4f634f7d8118a4a26 1581 Packages.bz2
+ 1e7e8931547ed0435aea1e78675b5255a46582881c69e31b4a3a32e7ee939a8d 1370 Packages.gz
+ 6d241d56fe082ce115db79aa24df9917c06a6d06b10de63f3e642039247022e4 1312 Packages.xz

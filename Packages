@@ -31,3 +31,45 @@ SHA256: 854c6849ebebbdcdc060d7c656a2e4c96659d18ad056f2d5d62abe90059587cc
 Description: 电话助手激活用户专属免费插件
  完美的使用原生灵动岛展示系统通知等...
  iOS17 的半越狱专用版本
+
+Package: com.zyh.bydpke
+Name: 比亚迪蓝牙感应解锁
+Version: 1.2
+Architecture: iphoneos-arm64
+Section: Tweaks
+Maintainer: zyh
+Author: zyh
+Depends: firmware (>= 15.0), mobilesubstrate
+Installed-Size: 228
+Depiction: https://zyh-repo.github.io/zyh-repo/#com.zyh.bydpke
+Filename: debs/com.zyh.bydpke_1.2_iphoneos-arm64.deb
+Size: 61848
+MD5sum: c6a6c16aa401e93accc464b3885e8db3
+SHA256: ca2dc181f3db2f1578cdf4054af2f714afe9fa3e29d41532b633edb13bae7e32
+Description: 比亚迪蓝牙感应解锁
+ 用于比亚迪汽车靠近自动解锁、离开自动上锁。
+ 支持锁车熄火、后台保活等。
+ 内置首页快捷开关：替换官方能耗模块。
+ 内置多种安全场景判定，如行驶中、未关门不执行任何操作等。
+ 首页「反馈&建议」可直接点击联系作者授权。
+
+Package: com.zyh.bydpke
+Name: 比亚迪蓝牙感应解锁
+Version: 1.2
+Architecture: iphoneos-arm64e
+Section: Tweaks
+Maintainer: zyh
+Author: zyh
+Depends: firmware (>= 15.0), mobilesubstrate
+Installed-Size: 228
+Depiction: https://zyh-repo.github.io/zyh-repo/#com.zyh.bydpke
+Filename: debs/com.zyh.bydpke_1.2_iphoneos-arm64e.deb
+Size: 62256
+MD5sum: d78d7c90af18725f1aa52b3102e62d6a
+SHA256: b42dc1f8258d3ace14fba3722ef7d206a631d6617998dc1dd69605ef63ebf75b
+Description: 比亚迪蓝牙感应解锁
+ 用于比亚迪汽车靠近自动解锁、离开自动上锁。
+ 支持锁车熄火、后台保活等。
+ 内置首页快捷开关：替换官方能耗模块。
+ 内置多种安全场景判定，如行驶中、未关门不执行任何操作等。
+ 首页「反馈&建议」可直接点击联系作者授权。
