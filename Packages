@@ -53,21 +53,19 @@ Description: 比亚迪蓝牙感应解锁
 
 Package: com.zyh.bydpke
 Name: 比亚迪蓝牙感应解锁
-Version: 1.2
+Version: 1.0
 Architecture: iphoneos-arm64e
 Section: Tweaks
 Maintainer: zyh
 Author: zyh
 Depends: firmware (>= 15.0), mobilesubstrate
-Installed-Size: 228
+Installed-Size: 160
 Depiction: https://zyh-repo.github.io/zyh-repo/#com.zyh.bydpke
-Filename: debs/com.zyh.bydpke_1.2_iphoneos-arm64e.deb
-Size: 62256
-MD5sum: d78d7c90af18725f1aa52b3102e62d6a
-SHA256: b42dc1f8258d3ace14fba3722ef7d206a631d6617998dc1dd69605ef63ebf75b
+Filename: debs/com.zyh.bydpke_1.0_iphoneos-arm64e.deb
+Size: 42412
+MD5sum: 45e29765cfc653a11c90eb1d995bb20f
+SHA256: 408c16de4f3533335470c21369270dd2243092bde90ba67e3a9f1fd7f44b795e
 Description: 比亚迪蓝牙感应解锁
- 用于比亚迪汽车靠近自动解锁、离开自动上锁。
+ 插件用于比亚迪汽车靠近自动解锁、离开自动上锁。
  支持锁车熄火、后台保活等。
- 内置首页快捷开关：替换官方能耗模块。
- 内置多种安全场景判定，如行驶中、未关门不执行任何操作等。
- 首页「反馈&建议」可直接点击联系作者授权。
+ 内置替换官方能耗模块，免费版无安全场景判定，如行驶中、未关门不执行任何操作等。
