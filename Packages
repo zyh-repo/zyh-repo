@@ -34,24 +34,22 @@ Description: 电话助手激活用户专属免费插件
 
 Package: com.zyh.bydpke
 Name: 比亚迪蓝牙感应解锁
-Version: 1.2
+Version: 1.0
 Architecture: iphoneos-arm64
 Section: Tweaks
 Maintainer: zyh
 Author: zyh
 Depends: firmware (>= 15.0), mobilesubstrate
-Installed-Size: 228
+Installed-Size: 160
 Depiction: https://zyh-repo.github.io/zyh-repo/#com.zyh.bydpke
-Filename: debs/com.zyh.bydpke_1.2_iphoneos-arm64.deb
-Size: 61848
-MD5sum: c6a6c16aa401e93accc464b3885e8db3
-SHA256: ca2dc181f3db2f1578cdf4054af2f714afe9fa3e29d41532b633edb13bae7e32
+Filename: debs/com.zyh.bydpke_1.0_iphoneos-arm64.deb
+Size: 42164
+MD5sum: 5023492db257c1c7b779e300510ce806
+SHA256: 01ca4deb4a9ec452f3002059ab46fe4907666faec6afedf627060e31c98fdd43
 Description: 比亚迪蓝牙感应解锁
- 用于比亚迪汽车靠近自动解锁、离开自动上锁。
+ 插件用于比亚迪汽车靠近自动解锁、离开自动上锁。
  支持锁车熄火、后台保活等。
- 内置首页快捷开关：替换官方能耗模块。
- 内置多种安全场景判定，如行驶中、未关门不执行任何操作等。
- 首页「反馈&建议」可直接点击联系作者授权。
+ 内置替换官方能耗模块，免费版无安全场景判定，如行驶中、未关门不执行任何操作等。
 
 Package: com.zyh.bydpke
 Name: 比亚迪蓝牙感应解锁
