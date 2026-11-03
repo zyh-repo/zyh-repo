@@ -73,3 +73,35 @@ Description: 比亚迪蓝牙感应解锁
  内置替换官方能耗模块。
  免费版仅提供基础功能（无安全场景判定与车机直连），
  需要更多功能请在插件页「反馈&建议」联系作者。
+
+Package: com.zyh.yadeakey
+Name: 雅迪蓝牙钥匙入口
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Section: Tweaks
+Maintainer: zyh
+Author: zyh
+Depends: firmware (>= 15.0), mobilesubstrate
+Installed-Size: 76
+Depiction: https://zyh-repo.github.io/zyh-repo/#com.zyh.yadeakey
+Filename: debs/com.zyh.yadeakey_1.0.0_iphoneos-arm64.deb
+Size: 5688
+MD5sum: 01065f6a694947f3eea2c5269fd3656a
+SHA256: 7f9379938c75771eccc6b0c61fd66bad23795fab5b9078b235b3244939c45ffd
+Description: 让雅迪智行里的亲友 / 家庭子账号，也能拥有「蓝牙钥匙 / 一键开机 / 无感开机」入口。
+
+Package: com.zyh.yadeakey
+Name: 雅迪蓝牙钥匙入口
+Version: 1.0.0
+Architecture: iphoneos-arm64e
+Section: Tweaks
+Maintainer: zyh
+Author: zyh
+Depends: firmware (>= 15.0), mobilesubstrate
+Installed-Size: 76
+Depiction: https://zyh-repo.github.io/zyh-repo/#com.zyh.yadeakey
+Filename: debs/com.zyh.yadeakey_1.0.0_iphoneos-arm64e.deb
+Size: 5664
+MD5sum: 39af213bb57e5bce59c13cbf6b323b07
+SHA256: 20799a2dd8f708fdd11f5fdcea9a069d18af5c28530d030f9a9047ac80edd0d3
+Description: 让雅迪智行里的亲友 / 家庭子账号，也能拥有「蓝牙钥匙 / 一键开机 / 无感开机」入口。
