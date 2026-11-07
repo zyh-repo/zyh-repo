@@ -1,6 +1,6 @@
 Package: com.xybp888.callassist17.roothide
 Name: 电话助手iOS17-正式版(Roothide)
-Version: 2.4.7
+Version: 2.4.8
 Architecture: iphoneos-arm64e
 Section: Tweaks
 Priority: optional
@@ -12,10 +12,10 @@ Replaces:
 Homepage: 
 dev: xybp888
 Depiction: https://zyh-repo.github.io/zyh-repo/#com.xybp888.callassist17.roothide
-Filename: debs/com.xybp888.callassist17.roothide_2.4.7_iphoneos-arm64e.deb
-Size: 3751108
-MD5sum: 4c1bf90a80bea650f83f3009653930f0
-SHA256: 5a4d476a4b8e37c0e14f300628f580dea0f2562c8c1a957555098f541000436e
+Filename: debs/com.xybp888.callassist17.roothide_2.4.8_iphoneos-arm64e.deb
+Size: 3748402
+MD5sum: caf09a2c4509c3ef1bdc9ec55411b4b5
+SHA256: b4551a30321c625f7fa75248bb1386a9f006f106940c2d4d65facd1cf2e1a8d9
 Description: 电话助手授权版本,通话录音,通话记录合并,T9双卡选卡拨号键盘,短信双卡选卡,来去电归属地,黑名单,骚扰拦截,状态栏图标替换,时间格式修改,常用小功能等强大插件
 
 Package: com.xybp888.perfectdynamiclsland17.roothide
