@@ -7,7 +7,7 @@ Architectures: iphoneos-arm64 iphoneos-arm64e
 Components: main
 Description: ZYH 的个人自用越狱源
  收录自用插件与工具，按需发布。
-Date: Thu, 19 Nov 2026 01:36:13 +0000
+Date: Fri, 20 Nov 2026 01:34:23 +0000
 MD5Sum:
  631526d2f543e22926a1d29c4635895f 4265 Packages
  59715857b189b514e561b5a9da6607ae 1906 Packages.bz2
