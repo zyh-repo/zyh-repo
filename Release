@@ -7,14 +7,14 @@ Architectures: iphoneos-arm64 iphoneos-arm64e
 Components: main
 Description: ZYH 的个人自用越狱源
  收录自用插件与工具，按需发布。
-Date: Sat, 21 Nov 2026 01:01:08 +0000
+Date: Sun, 22 Nov 2026 00:00:31 +0000
 MD5Sum:
- ff1cc8cc0935356a2a6a1f4a387e7329 4265 Packages
- dcfc100c97db3311391bad39687611b0 1902 Packages.bz2
- 3755039212c2665a2c8b66d2206a3170 1678 Packages.gz
- 1e31d72484ff480351717aea7345d451 1580 Packages.xz
+ 2d990f8836d32a592a2dd750cfc2aed3 4265 Packages
+ 37a07bd1873dd18ac0389d677f0cecf9 1902 Packages.bz2
+ cefee1cf52c2ca8a4e2e7339d68445ae 1676 Packages.gz
+ f6577ce242cca4964cb8b39b50925d7c 1580 Packages.xz
 SHA256:
- f44a4afcd8fc3b7a4bcdcb9a51a7acd48b160b1a9176542a4bb18db609e4db1c 4265 Packages
- eab247b8440dad0368be7f44d39b6d1b51fa098266b72edae21e810de7ea10a8 1902 Packages.bz2
- 7b40a0d4363d77f25e8a7046de13ee155b7dfd735d64c4c9fa3a74e00f50224d 1678 Packages.gz
- 6e46232d1714f30c95fd21d4fea595ea52ce231869b05bf4380eba9c9d0142cd 1580 Packages.xz
+ 17296d97d8c02b22a23978bb34523b077e4c13d9e0b23f9f6ab9fee8fb9d9df9 4265 Packages
+ a44c6e1082f56d71f5250e3575915c190c72635477908decbc57cee92a87c41c 1902 Packages.bz2
+ 2b560e0adfc88cc9ec40bbaabdab9185e65c96fdfd0823e6872691a43a644103 1676 Packages.gz
+ eb9da46b215f25cab17b43a937ea6ce2cff07b573e79f0bf5c39c7278dc9dccd 1580 Packages.xz
